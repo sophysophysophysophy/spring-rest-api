@@ -2,13 +2,18 @@ package me.sophy.demorestapi.events;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
 // All : 모든 param 생성자 , no : param 없는 생성자 생성
 @Builder @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter @EqualsAndHashCode(of = "id")
+@Entity
 public class Event {
+
+    @Id @GeneratedValue
+    private Integer id;
     private String name;
     private String description;
     private LocalDateTime beginEnrollmentDateTime;
@@ -19,9 +24,12 @@ public class Event {
     private int basePrice; // (optional)
     private int maxPrice; // (optional)
     private int limitOfEnrollment;
-    private Integer id;
     private boolean offline;
     private boolean free;
+
+
+//    ordinal 보다는 string으로 저장하는 것이 더 safe
+    @Enumerated(EnumType.STRING)
     private EventStatus eventStatus = EventStatus.DRAFT;
 
 
