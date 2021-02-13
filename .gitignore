@@ -1,0 +1,15 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+### macOS template
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# IntelliJ project files
+.idea
+.idea/*.xml
+*.iml
+out
+gen
+build
+rebel.xml
