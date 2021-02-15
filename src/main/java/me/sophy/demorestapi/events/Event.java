@@ -1,5 +1,6 @@
 package me.sophy.demorestapi.events;
 
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,12 +8,17 @@ import java.time.LocalDateTime;
 
 
 // All : 모든 param 생성자 , no : param 없는 생성자 생성
-@Builder @AllArgsConstructor @NoArgsConstructor
-@Getter @Setter @EqualsAndHashCode(of = "id")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
 @Entity
 public class Event {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Integer id;
     private String name;
     private String description;
