@@ -1,6 +1,7 @@
 package me.sophy.demorestapi.events;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -48,6 +50,7 @@ public class EventControllerTest {
                 .endEventDateTime(LocalDateTime.of(2021, 03, 1, 12, 20))
                 .basePrice(100)
                 .maxPrice(200)
+                .free(false)
                 .limitOfEnrollment(100)
                 .location("강남")
                 .build();
@@ -58,12 +61,14 @@ public class EventControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaTypes.HAL_JSON)                //accept header 지정
                 .content(objectMapper.writeValueAsString(event))
-                )
+        )
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("id").exists())
                 .andExpect(header().exists(HttpHeaders.LOCATION))
-                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE));
+                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
+                .andExpect(jsonPath("id").value(Matchers.not(10)))
+                .andExpect(jsonPath("free").value(Matchers.not(true)));
     }
 
 
